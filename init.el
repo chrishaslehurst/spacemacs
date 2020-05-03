@@ -66,9 +66,7 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages
    '(yasnippets-snippets
-     irony
-     company-irony
-     company-irony-c-headers )
+      )
    
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -275,7 +273,7 @@ values."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers t 
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
@@ -328,36 +326,20 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
   ;;Setup for cmake-ide and cpp development environment
-  (require 'rtags) ;; optional, must have rtags installed
+  (require 'rtags) 
   (require 'company-rtags)
-  
-;;  (require 'company-clang)
-;;  (global-company-mode)
-;; (add-to-list 'company-backends 'company-clang)
-
-;;  (require 'company)
-
-;;  (require 'irony)
-;;  (require 'company-irony)
-;;  (require 'company-c-headers)
+  (require 'company-c-headers)
 
   (setq rtags-autostart-diagnostics t)
   (rtags-enable-standard-keybindings)
 
   (spacemacs|add-company-backends
-    :backends company-clang-c-headers company-clang
+    :backends company-c-headers company-clang
     :modes c++-mode)
-  
-  (add-hook 'c++-mode-hook 'irony-mode)
-  (add-hook 'c-mode-hook 'irony-mode)
-  (add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
- ;; (add-hook 'c++-mode-hook 'company-mode)
-;;  (add-hook 'c++-mode-hook 'flycheck-mode)
-;;  (eval-after-load 'flycheck
-;;   '(add-hook 'flycheck-mode-hook #'flycheck-irony-setup))
 
   ;;cmake-ide
   (cmake-ide-setup)
+
   ;;Org mode settings
   (with-eval-after-load 'org
     (setq org-todo-keywords
